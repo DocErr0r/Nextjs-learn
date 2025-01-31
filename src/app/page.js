@@ -24,7 +24,7 @@ export default function Home() {
   return (
     <>
       <section className="relative py-20">
-        <div className="container mx-auto flex flex-col md:flex-row items-center justify-between space-y-6 md:space-y-0 md:space-x-12">
+        <div className="container sm:px-4 mx-auto flex flex-col md:flex-row items-center justify-between space-y-6 md:space-y-0 md:space-x-12">
 
           {/* Text Content */}
           <div className="md:w-1/2 text-center md:text-left">
@@ -136,7 +136,7 @@ export default function Home() {
         </div>
       </section>
       <section className="border-t-4 py-20">
-        <div className="container mx-auto text-center">
+        <div className="container mx-auto px-4 text-center">
           <h2 className="text-3xl md:text-4xl font-bold mb-8">Our Features</h2>
           <p className="mb-12 text-lg">Discover the amazing features that make our service unique.</p>
           <div className="flex flex-col max-sm:m-2 md:flex-row justify-center space-y-6 md:space-y-0 md:space-x-6">

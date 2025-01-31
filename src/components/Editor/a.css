@@ -1,0 +1,20 @@
+/* Increase editor height */
+.custom-quill .ql-container {
+  height: 300px; 
+  overflow-y: auto;
+}
+
+/* Toolbar styles */
+.custom-quill .ql-toolbar {
+  color: white; /* Toolbar text color */
+  background-color: #333; /* Optional toolbar background */
+  border: none;
+}
+
+.custom-quill .ql-toolbar .ql-picker {
+  color: white; /* Text color for dropdowns */
+}
+
+.custom-quill .ql-toolbar .ql-stroke {
+  stroke: white; /* Icons in the toolbar */
+}
