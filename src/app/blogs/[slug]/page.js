@@ -4,27 +4,32 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import Link from 'next/link';
 import Image from 'next/image';
 
-import blogData from '@/contents/blog.json'
 import { notFound } from "next/navigation";
 import { Button } from "@/components/ui/button";
 
-const BlogInfoPage = ({ params }) => {
-    const { blog } = blogData;
+const getBlog = async (slug = '__') => {
+    const response = await fetch(`http://localhost:3000/api/getblogs/${slug}`, { cache: 'no-store' })
+    const blogData = await response.json()
+    return blogData;
+}
+
+const BlogInfoPage = async ({ params }) => {
+    const blog = await getBlog(params.slug);
     if (params.slug !== blog.slug) {
         return notFound()
     }
 
     return (
         <div className="container mx-auto px-4 py-8">
-            <div className="relative w-full h-[400px] mb-8 rounded-lg overflow-hidden">
+            {blog?.image && <div className="relative w-full h-[400px] max-sm:h-[180px] mb-8 rounded-lg overflow-hidden">
                 <Image
                     src={blog.image}
                     alt={blog.title}
                     fill
-                    className="object-contain max-sm:h-full"
+                    className="object-contain"
                     priority
                 />
-            </div>
+            </div>}
 
             <Card className="mb-8">
                 <CardHeader>
@@ -41,12 +46,12 @@ const BlogInfoPage = ({ params }) => {
                     </div>
                 </CardHeader>
                 <CardContent>
-                    <div className="mb-4">
+                    {/* <div className="mb-4">
                         <Badge variant="secondary" className="mr-2">{blog.category}</Badge>
                         {blog.tags.map((tag, index) => (
                             <Badge key={index} variant="outline" className="mr-2">{tag}</Badge>
                         ))}
-                    </div>
+                    </div> */}
 
                     <p className="mb-6 ">{blog.introduction}</p>
 
@@ -61,7 +66,7 @@ const BlogInfoPage = ({ params }) => {
             </Card>
 
             {/* Author Card */}
-            <Card>
+            {/* <Card>
                 <CardHeader>
                     <CardTitle className="text-xl font-semibold">About the Author</CardTitle>
                 </CardHeader>
@@ -77,7 +82,7 @@ const BlogInfoPage = ({ params }) => {
                         </div>
                     </div>
                 </CardContent>
-            </Card>
+            </Card> */}
 
             {/* Share Buttons */}
             <div className="mt-8 flex justify-center space-x-4">
