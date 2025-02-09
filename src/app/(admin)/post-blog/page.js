@@ -38,33 +38,33 @@ const AddBlog = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        // try {
-        //     const response = await fetch('/api/addblog', {
-        //         method: "POST",
-        //         headers: {
-        //             "Content-Type": "application/json",
-        //         },
-        //         body: JSON.stringify(blog),
-        //     });
-        //     const data=await response.json()
-        //     console.log(data);
+        try {
+            const response = await fetch('/api/addblog', {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(blog),
+            });
+            const data=await response.json()
+            console.log(data);
             
-        //     // if (response.ok) {
-        //     //     alert("Blog added successfully!");
-        //     //     setBlog({
-        //     //         title: "",
-        //     //         date: "",
-        //     //         image: "",
-        //     //         introduction: "",
-        //     //         content: "",
-        //     //         conclusion: "",
-        //     //     });
-        //     // } else {
-        //     //     alert("Failed to add the blog.");
-        //     // }
-        // } catch (error) {
-        //     console.error("Error adding blog:", error);
-        // }
+            // if (response.ok) {
+            //     alert("Blog added successfully!");
+            //     setBlog({
+            //         title: "",
+            //         date: "",
+            //         image: "",
+            //         introduction: "",
+            //         content: "",
+            //         conclusion: "",
+            //     });
+            // } else {
+            //     alert("Failed to add the blog.");
+            // }
+        } catch (error) {
+            console.error("Error adding blog:", error);
+        }
     };
 
     return (
