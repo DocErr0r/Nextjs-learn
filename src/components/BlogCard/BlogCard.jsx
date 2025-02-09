@@ -14,7 +14,7 @@ const BlogCard = ({ title, description, slug, date, author, image }) => (
             <p className="text-sm text-gray-500">{date}</p>
         </CardHeader>
         <CardContent>
-            <p className="text-gray-700">{description}</p>
+            <p className="text-gray-700">{description.slice(0,100)}...</p>
         </CardContent>
         <CardFooter className="flex justify-between items-center">
             <div className="flex items-center space-x-2">

@@ -14,7 +14,7 @@ export async function GET(req, res) {
             const jsonData = JSON.parse(fileContent)
             return {
                 title: jsonData.title,
-                description: jsonData.introdection,
+                description: jsonData.introduction,
                 slug: jsonData.slug,
                 date: jsonData.date,
                 author: jsonData.author,
