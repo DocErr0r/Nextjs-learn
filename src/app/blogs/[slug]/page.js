@@ -8,7 +8,7 @@ import { notFound } from "next/navigation";
 import { Button } from "@/components/ui/button";
 
 const getBlog = async (slug = '__') => {
-    const response = await fetch(`http://localhost:3000/api/getblogs/${slug}`, { cache: 'no-store' })
+    const response = await fetch(`${process.env.BASEURL}/api/getblogs/${slug}`, { cache: 'no-store' })
     const blogData = await response.json()
     return blogData;
 }
