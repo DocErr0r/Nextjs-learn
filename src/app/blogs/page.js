@@ -49,7 +49,7 @@ const Blog = () => {
 
     useEffect(() => {
         getBlogs().then((data) => {
-            console.log(data);
+            // console.log(data);
             setBlogs(data)
         })
     }, []);

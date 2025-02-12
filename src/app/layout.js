@@ -2,6 +2,7 @@ import "./globals.css";
 import Navbar from "@/components/Navbar/Navbar";
 import { ThemeProvider } from "@/components/theme-provider"
 import Footer from "@/components/Footer/Footer";
+import { Toaster } from "@/components/ui/toaster"
 
 export const metadata = {
   title: "Create Next App",
@@ -21,7 +22,8 @@ export default function RootLayout({ children }) {
           disableTransitionOnChange
         >
           <Navbar />
-            {children}
+          {children}
+          <Toaster />
           <Footer />
         </ThemeProvider>
       </body>
