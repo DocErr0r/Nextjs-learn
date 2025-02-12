@@ -24,25 +24,74 @@ const Navbar = () => {
     return (
         <nav className="px-6 py-4 bg-background/50 sticky z-50 top-0 border-b backdrop-blur">
             <div className="container mx-auto flex items-center justify-between">
-                {/* Logo */}
-                <div className="text-2xl font-bold">
-                    <Link href="/">BlogNits</Link>
+                <div className="flex">
+                    {/* Mobile Menu */}
+                    <div className="md:hidden flex items-center">
+                        <Sheet open={isOpen} onOpenChange={setIsOpen}>
+                            <SheetTrigger className="border rounded-sm p-1">
+                                {/* Hamburger Icon */}
+                                <svg className="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16m-7 6h7" />
+                                </svg>
+                            </SheetTrigger>
+                            <SheetContent side="left">
+                                <SheetHeader>
+                                    <SheetTitle className="font-bold text-left my-3">BlogNits</SheetTitle>
+                                    <SheetDescription></SheetDescription>
+                                </SheetHeader>
+                                <div className="flex flex-col space-y-6 items-center">
+                                    <Link href="/" className="hover:text-gray-400 transition-colors duration-300" onClick={closeSheet}>
+                                        Home
+                                    </Link>
+                                    <Link href="/blogs" className="hover:text-gray-400 transition-colors duration-300" onClick={closeSheet}>
+                                        Blogs
+                                    </Link>
+                                    <Link href="/about" className="hover:text-gray-400 transition-colors duration-300" onClick={closeSheet}>
+                                        About
+                                    </Link>
+                                    <Link href="/contact" className="hover:text-gray-400 transition-colors duration-300" onClick={closeSheet}>
+                                        Contact
+                                    </Link>
+                                    {!isAuth && (
+                                        <>
+                                            {' '}
+                                            <Button variant="outline" onClick={() => router.push('/login')}>
+                                                Admin Login
+                                            </Button>
+                                            {/* <Button variant="outline" onClick={closeSheet}>
+                                            Signup
+                                        </Button> */}
+                                        </>
+                                    )}
+                                </div>
+                            </SheetContent>
+                        </Sheet>
+                    </div>
+                    {/* Logo */}
+                    <div className="text-2xl font-bold">
+                        <Link href="/">BlogNits</Link>
+                    </div>
                 </div>
 
                 {/* Nav Links */}
-                <div className="hidden md:flex space-x-6 items-center">
-                    <Link href="/" className="hover:text-gray-400 transition-colors duration-300">
-                        Home
-                    </Link>
-                    <Link href="/blogs" className="hover:text-gray-400 transition-colors duration-300">
-                        Blogs
-                    </Link>
-                    <Link href="/about" className="hover:text-gray-400 transition-colors duration-300">
-                        About
-                    </Link>
-                    <Link href="/contact" className="hover:text-gray-400 transition-colors duration-300">
-                        Contact
-                    </Link>
+                <div className="flex md:space-x-6 space-x-2 items-center">
+                    <div className="hidden md:flex space-x-6 items-center">
+                        <Link href="/" className="hover:text-gray-400 transition-colors duration-300">
+                            Home
+                        </Link>
+                        <Link href="/blogs" className="hover:text-gray-400 transition-colors duration-300">
+                            Blogs
+                        </Link>
+                        <Link href="/about" className="hover:text-gray-400 transition-colors duration-300">
+                            About
+                        </Link>
+                        <Link href="/contact" className="hover:text-gray-400 transition-colors duration-300">
+                            Contact
+                        </Link>
+                    </div>
+                    <div className="md:hidden flex items-center space-x-2">
+                       
+                    </div>
                     <Themebtn />
                     {isAuth ? (
                         <>
@@ -53,8 +102,8 @@ const Navbar = () => {
                                         <AvatarFallback>A</AvatarFallback>
                                     </Avatar>
                                 </PopoverTrigger>
-                                <PopoverPortal>
-                                    <PopoverContent className="shadow-lg rounded-md p-4">
+                                <PopoverPortal >
+                                    <PopoverContent className="shadow-lg rounded-md p-4 mx-4">
                                         <ul className="space-y-2">
                                             <li>
                                                 <Link href={'/dashboard'} className="block" onClick={closeDropdown}>
@@ -77,61 +126,15 @@ const Navbar = () => {
                             </Popover>
                         </>
                     ) : (
-                        <>
+                        <div className='hidden md:flex space-x-4'>
                             <Button variant="secondary" onClick={() => router.push('/login')}>
-                                Login
+                                Admin Login
                             </Button>
-                            <Button variant="outline" onClick={() => router.push('/register')}>
+                            {/* <Button variant="outline" onClick={() => router.push('/register')}>
                                 Signup
-                            </Button>
-                        </>
+                            </Button> */}
+                        </div>
                     )}
-                </div>
-
-                {/* Mobile Menu */}
-                <div className="md:hidden flex items-center">
-                    <span className="mx-2">
-                        <Themebtn />
-                    </span>
-                    <Sheet open={isOpen} onOpenChange={setIsOpen}>
-                        <SheetTrigger className="border rounded-sm p-1">
-                            {/* Hamburger Icon */}
-                            <svg className="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16m-7 6h7" />
-                            </svg>
-                        </SheetTrigger>
-                        <SheetContent>
-                            <SheetHeader>
-                                <SheetTitle className="font-bold text-left my-3">BlogNits</SheetTitle>
-                                <SheetDescription></SheetDescription>
-                            </SheetHeader>
-                            <div className="flex flex-col space-y-6 items-center">
-                                <Link href="/" className="hover:text-gray-400 transition-colors duration-300" onClick={closeSheet}>
-                                    Home
-                                </Link>
-                                <Link href="/blogs" className="hover:text-gray-400 transition-colors duration-300" onClick={closeSheet}>
-                                    Blogs
-                                </Link>
-                                <Link href="/about" className="hover:text-gray-400 transition-colors duration-300" onClick={closeSheet}>
-                                    About
-                                </Link>
-                                <Link href="/contact" className="hover:text-gray-400 transition-colors duration-300" onClick={closeSheet}>
-                                    Contact
-                                </Link>
-                                {!isAuth && (
-                                    <>
-                                        {' '}
-                                        <Button variant="outline" onClick={closeSheet}>
-                                            Login
-                                        </Button>
-                                        <Button variant="outline" onClick={closeSheet}>
-                                            Signup
-                                        </Button>
-                                    </>
-                                )}
-                            </div>
-                        </SheetContent>
-                    </Sheet>
                 </div>
             </div>
         </nav>

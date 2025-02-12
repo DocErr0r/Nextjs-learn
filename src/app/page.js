@@ -22,7 +22,7 @@ export default function Home() {
   }
 `}</style>
   return (
-    <>
+    <div className="container mx-auto p-3">
       <section className="relative py-20">
         <div className="container sm:px-4 mx-auto flex flex-col md:flex-row items-center justify-between space-y-6 md:space-y-0 md:space-x-12">
 
@@ -245,6 +245,6 @@ export default function Home() {
           </div>
         </div>
       </section>
-    </>
+    </div>
   );
 }
