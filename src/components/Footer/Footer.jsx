@@ -10,7 +10,7 @@ export default function Footer() {
 
                 {/* Subscription Form */}
                 <div className="flex justify-center flex-wrap gap-2 mb-6">
-                    <input type="email" placeholder="Enter your email" className="p-2 rounded-md text-gray-800" />
+                    <input type="email" placeholder="Enter your email" className="p-2 rounded-md dark:text-gray-300 text-black" />
                     <Button className="bg-blue-600 hover:bg-blue-700 rounded-r-md">Subscribe</Button>
                 </div>
 
@@ -32,13 +32,13 @@ export default function Footer() {
 
                 {/* Social Media Icons */}
                 <div className="flex justify-center flex-wrap space-x-4 mb-6">
-                    <a href="#" target='blank' className="text-blue-400 hover:text-blue-500">
+                    <a href="#" target="blank" className="text-blue-400 hover:text-blue-500">
                         Facebook
                     </a>
-                    <a href="#" target='blank' className="text-blue-400 hover:text-blue-500">
+                    <a href="#" target="blank" className="text-blue-400 hover:text-blue-500">
                         Twitter
                     </a>
-                    <a href="#" target='blank' className="text-blue-400 hover:text-blue-500">
+                    <a href="#" target="blank" className="text-blue-400 hover:text-blue-500">
                         Instagram
                     </a>
                     <a href="#" target="blank" className="text-blue-400 hover:text-blue-500">
@@ -47,8 +47,8 @@ export default function Footer() {
                 </div>
 
                 {/* Copyright Section */}
-                <div className="text-sm">
-                    <p>&copy; {new Date().getFullYear()} BlogNits. All rights reserved.</p>
+                <div className="text-sm mb-4">
+                    <p>&copy; {new Date().getFullYear()} BlogNits. All rights reserved and Developed by Nitin with ❤︎</p>
                 </div>
             </div>
         </footer>
