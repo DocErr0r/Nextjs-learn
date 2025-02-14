@@ -8,10 +8,13 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Popover, PopoverContent, PopoverTrigger } from '../ui/popover';
 import { PopoverPortal } from '@radix-ui/react-popover';
 import { useState } from 'react';
+import { auth } from '@/lib/firebase/firebaseconfig';
 
 const Navbar = () => {
+    console.log(auth.currentUser);
+
     const router = useRouter();
-    const isAuth = true;
+    const isAuth = auth.currentUser ? true : false;
     const [isOpen, setIsOpen] = useState(false);
     const closeSheet = () => {
         setIsOpen(false);
@@ -19,6 +22,15 @@ const Navbar = () => {
     const [isOpenDropdown, setIsOpenDropdown] = useState(false);
     const closeDropdown = () => {
         setIsOpenDropdown(false);
+    };
+
+    const handleLogout = async () => {
+        try {
+            await auth.signOut();
+            router.push('/');
+        } catch (error) {
+            console.error(error);
+        }
     };
 
     return (
@@ -89,9 +101,7 @@ const Navbar = () => {
                             Contact
                         </Link>
                     </div>
-                    <div className="md:hidden flex items-center space-x-2">
-                       
-                    </div>
+                    <div className="md:hidden flex items-center space-x-2"></div>
                     <Themebtn />
                     {isAuth ? (
                         <>
@@ -102,7 +112,7 @@ const Navbar = () => {
                                         <AvatarFallback>A</AvatarFallback>
                                     </Avatar>
                                 </PopoverTrigger>
-                                <PopoverPortal >
+                                <PopoverPortal>
                                     <PopoverContent className="shadow-lg rounded-md p-4 mx-4">
                                         <ul className="space-y-2">
                                             <li>
@@ -116,7 +126,13 @@ const Navbar = () => {
                                                 </Link>
                                             </li>
                                             <li>
-                                                <Button variant="outline" onClick={closeDropdown} className="w-full hover:bg-red-500 hover:text-white transition-colors duration-200">
+                                                <Button
+                                                    variant="outline"
+                                                    onClick={() => {
+                                                        handleLogout();
+                                                        closeDropdown();
+                                                    }}
+                                                    className="w-full hover:bg-red-500 hover:text-white transition-colors duration-200">
                                                     Logout
                                                 </Button>
                                             </li>
@@ -126,7 +142,7 @@ const Navbar = () => {
                             </Popover>
                         </>
                     ) : (
-                        <div className='hidden md:flex space-x-4'>
+                        <div className="hidden md:flex space-x-4">
                             <Button variant="secondary" onClick={() => router.push('/login')}>
                                 Admin Login
                             </Button>
