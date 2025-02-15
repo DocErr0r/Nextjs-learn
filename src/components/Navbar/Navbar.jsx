@@ -8,13 +8,14 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Popover, PopoverContent, PopoverTrigger } from '../ui/popover';
 import { PopoverPortal } from '@radix-ui/react-popover';
 import { useState } from 'react';
+import { useSelector } from 'react-redux';
 import { auth } from '@/lib/firebase/firebaseconfig';
 
 const Navbar = () => {
-    console.log(auth.currentUser);
+    const { user, loading } = useSelector((state) => state.user);
 
     const router = useRouter();
-    const isAuth = auth.currentUser ? true : false;
+    const isAuth = user
     const [isOpen, setIsOpen] = useState(false);
     const closeSheet = () => {
         setIsOpen(false);
@@ -32,6 +33,12 @@ const Navbar = () => {
             console.error(error);
         }
     };
+    console.log(loading);
+    
+
+    if (loading) return (
+        <div>Loading...</div>
+    );
 
     return (
         <nav className="px-6 py-4 bg-background/50 sticky z-50 top-0 border-b backdrop-blur">
