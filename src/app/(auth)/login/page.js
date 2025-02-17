@@ -1,47 +1,53 @@
 'use client'
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { useDispatch, useSelector } from "react-redux";
+import { loginwithEmail } from "@/lib/ReduxToolkit/slices/userSlice";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { auth } from "@/lib/firebase/firebaseconfig";
-import { signInWithEmailAndPassword } from "firebase/auth";
-import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { Eye, EyeOff } from "lucide-react";
+import { useToast } from "@/hooks/use-toast";
+import gicon from './gicon.png';
+
 
 const LoginPage = () => {
   const [showPassword, setShowPassword] = useState(false);
-  const [creadentials, setCreadentials] = useState({ email: '', password: '' });
-  const [error, setError] = useState(null);
-  const route=useRouter()
+  const [credentials, setCredentials] = useState({ email: "", password: "" });
+  const router = useRouter();
+  const dispatch = useDispatch();
+  const { user, loading, error } = useSelector((state) => state.user);
+  const { toast } = useToast();
 
+  // Handle Input Change
   const handleInputChange = (event) => {
     const { name, value } = event.target;
-    setCreadentials({ ...creadentials, [name]: value });
-  }
+    setCredentials({ ...credentials, [name]: value });
+  };
 
+  // Handle Login with Email
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // const formData= new FormData(e.target);
-    // const email= formData.get('email');
-    // console.log(creadentials);
     try {
-      const response = await signInWithEmailAndPassword(auth, creadentials.email, creadentials.password);
-      console.log(response);
-      route.push('/')
-    } catch (error) {
-      console.error(error);
-      if (error.code === 'auth/invalid-credential') {
-        setError('Invaild email and pasword try again.');
-      }
+      const result = await dispatch(loginwithEmail(credentials)).unwrap();
+      toast({
+        title: "Login Successful",
+        // description: `Welcome, ${result.email}`,
+        duration: 2000
+      });
+      router.push("/");
+    } catch (err) {
+      toast({ title: "Login Failed", description: err.message, variant: "destructive", duration: 3000 });
     }
   };
 
   return (
-    <div className="max-w-md mx-auto mt-10 p-6 border rounded-lg shadow-md">
+    <div className="sm:max-w-md mx-auto sm:my-10 p-6 border rounded-lg shadow-md">
       <h2 className="text-2xl font-bold mb-6 text-center">Login</h2>
       <form onSubmit={handleSubmit} className="space-y-4">
         <div>
           <Label htmlFor="email">Email</Label>
-          <Input type="email" name='email' id='email' placeholder="Enter your email" value={creadentials.email} onChange={handleInputChange} required />
+          <Input type="email" name="email" id="email" placeholder="Enter your email" value={credentials.email} onChange={handleInputChange} required />
         </div>
         <div>
           <Label htmlFor="password">Password</Label>
@@ -49,26 +55,38 @@ const LoginPage = () => {
             <Input
               type={showPassword ? "text" : "password"}
               name="password"
-              value={creadentials.password}
+              id="password"
+              value={credentials.password}
               onChange={handleInputChange}
               placeholder="Enter your password"
               required
             />
             <button
               type="button"
-              className="absolute inset-y-0 right-0 pr-3 flex items-center text-sm leading-5"
+              className="absolute inset-y-0 right-3 flex items-center text-gray-500 hover:text-gray-700"
               onClick={() => setShowPassword(!showPassword)}
             >
-              {showPassword ? "Hide" : "Show"}
+              {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
             </button>
           </div>
         </div>
         {error && <div className="text-sm text-red-600">{error}</div>}
-        <Button type="submit" className="w-full">Login</Button>
-        <Button type="button" className="w-full mt-4 bg-red-500 text-white" onClick={() => alert('Google Login')}>
-          Login with Google
+        <Button type="submit" className="w-full" disabled={loading}>
+          {loading ? "Logging in..." : "Login"}
         </Button>
       </form>
+
+
+      <div className="flex items-center my-2">
+        <div className="flex-grow border-b border-gray-300"></div>
+        <span className="mx-2 text-sm text-gray-500 ">or sign in with</span>
+        <div className="flex-grow border-b border-gray-300"></div>
+      </div>
+
+      <Button type="button" className="w-full mt-4 text-white b bg-transparent border hover:bg-gray-900">
+        <img src={gicon.src} alt="G" width={24} />
+        Sign in with Google
+      </Button>
     </div>
   );
 };

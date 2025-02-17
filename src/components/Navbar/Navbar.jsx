@@ -8,11 +8,12 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Popover, PopoverContent, PopoverTrigger } from '../ui/popover';
 import { PopoverPortal } from '@radix-ui/react-popover';
 import { useState } from 'react';
-import { useSelector } from 'react-redux';
-import { auth } from '@/lib/firebase/firebaseconfig';
+import { useDispatch, useSelector } from 'react-redux';
+import { logout } from '@/lib/ReduxToolkit/slices/userSlice';
 
 const Navbar = () => {
     const { user, loading } = useSelector((state) => state.user);
+    const dispatch = useDispatch();
 
     const router = useRouter();
     const isAuth = user
@@ -27,18 +28,18 @@ const Navbar = () => {
 
     const handleLogout = async () => {
         try {
-            await auth.signOut();
+            await dispatch(logout()).unwrap();
             router.push('/');
         } catch (error) {
             console.error(error);
         }
     };
-    console.log(loading);
+    // console.log(loading);
     
 
-    if (loading) return (
-        <div>Loading...</div>
-    );
+    // if (loading) return (
+    //     <div>Loading...</div>
+    // );
 
     return (
         <nav className="px-6 py-4 bg-background/50 sticky z-50 top-0 border-b backdrop-blur">
@@ -47,10 +48,10 @@ const Navbar = () => {
                     {/* Mobile Menu */}
                     <div className="md:hidden flex items-center">
                         <Sheet open={isOpen} onOpenChange={setIsOpen}>
-                            <SheetTrigger className="border rounded-sm p-1">
+                            <SheetTrigger className="border rounded-sm p-1 mr-1">
                                 {/* Hamburger Icon */}
-                                <svg className="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16m-7 6h7" />
+                                <svg xmlns="http://www.w3.org/2000/svg" fill='currentColor' stroke='currentColor' className='h-6 w-6' viewBox="0 0 48 48">
+                                    <path strokeLinecap='round' d="M6 12h36v4H6zm0 10h36v4H6zm0 10h36v4H6z" />
                                 </svg>
                             </SheetTrigger>
                             <SheetContent side="left">
@@ -114,7 +115,7 @@ const Navbar = () => {
                         <>
                             <Popover open={isOpenDropdown} onOpenChange={setIsOpenDropdown}>
                                 <PopoverTrigger>
-                                    <Avatar>
+                                    <Avatar className="w-8 h-8">
                                         <AvatarImage src="https://github.com/shadcn.png" />
                                         <AvatarFallback>A</AvatarFallback>
                                     </Avatar>

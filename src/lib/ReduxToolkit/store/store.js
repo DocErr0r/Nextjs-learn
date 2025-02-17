@@ -5,13 +5,13 @@ import { setupListeners } from '@reduxjs/toolkit/query';
 import { BaseApi } from '../slices/apiSlice';
 
 import userReducer from '../slices/userSlice';
-import blogReducer from '../slices/blogSlice';
+// import blogReducer from '../slices/blogApiSlice';
 import { authListener } from './authListner';
 
 const store = configureStore({
   reducer: {
     user: userReducer,
-    blog: blogReducer,
+    // blog: blogReducer,
 
     [BaseApi.reducerPath]: BaseApi.reducer,
   },
