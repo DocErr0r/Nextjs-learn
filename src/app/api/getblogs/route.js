@@ -20,7 +20,7 @@ export async function GET(req, res) {
             data.push({
                 title: jsonData.title,
                 description: jsonData.introduction,
-                slug: jsonData.slug,
+                id: doc.id,
                 date: jsonData.date,
                 author: jsonData.author,
                 image: jsonData.image,

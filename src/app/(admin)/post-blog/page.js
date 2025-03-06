@@ -14,7 +14,8 @@ import { useToast } from "@/hooks/use-toast";
 
 const formSchema = z.object({
     title: z.string().min(2, "Title must be at least 2 characters"),
-    image: z.string().url("Invalid image URL").optional(),
+    // image: z.string().url("Invalid image URL").optional(),
+    image: z.string(),
     introduction: z.string().min(10, "Introduction must be at least 10 characters").max(200, "Introduction must be at most 100 characters"),
     content: z.string().min(20, "Content must be at least 20 characters"),
     conclusion: z.string().min(5, "Conclusion must be at least 5 characters"),
