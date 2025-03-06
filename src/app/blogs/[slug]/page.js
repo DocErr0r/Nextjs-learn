@@ -1,3 +1,4 @@
+'use client';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -6,6 +7,8 @@ import Image from 'next/image';
 
 import { notFound } from "next/navigation";
 import { Button } from "@/components/ui/button";
+import { useGetBlogQuery } from "@/lib/ReduxToolkit/slices/blogApiSlice";
+import Loader from "@/components/Loader/Loader";
 
 const getBlog = async (slug = '__') => {
     const response = await fetch(`${process.env.BASEURL}/api/getblogs/${slug}`, { cache: 'no-store' })
@@ -13,23 +16,25 @@ const getBlog = async (slug = '__') => {
     return blogData;
 }
 
-const BlogInfoPage = async ({ params }) => {
-    const blog = await getBlog(params.slug);
+const BlogInfoPage = ({ params }) => {
+    const { error, isLoading, data: blog } = useGetBlogQuery(params.slug);
+
+    if (isLoading) return <div>
+        <Loader />
+    </div>
+
+    if (error) {
+        console.log(error);
+
+        return notFound();
+    }
+
     if (params.slug !== blog.slug) {
         return notFound()
     }
 
     return (
         <div className="container mx-auto px-4 py-8">
-            {blog?.image && <div className="relative w-full h-[400px] max-sm:h-[180px] mb-8 rounded-lg overflow-hidden">
-                <Image
-                    src={blog.image}
-                    alt={blog.title}
-                    fill
-                    className="object-contain"
-                    priority
-                />
-            </div>}
 
             <Card className="mb-8">
                 <CardHeader>
@@ -54,6 +59,16 @@ const BlogInfoPage = async ({ params }) => {
                     </div> */}
 
                     <p className="mb-6 ">{blog.introduction}</p>
+
+                    {blog?.image && <div className="relative w-full h-[400px] max-sm:h-[180px] mb-8 rounded-lg overflow-hidden">
+                        <Image
+                            src={blog.image}
+                            alt={blog.title}
+                            fill
+                            className="object-contain"
+                            priority
+                        />
+                    </div>}
 
                     {/* Blog Sections with Images */}
                     <div className="my-4">
