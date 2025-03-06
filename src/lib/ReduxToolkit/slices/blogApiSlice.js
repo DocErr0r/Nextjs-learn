@@ -3,11 +3,14 @@ const { BaseApi } = require("./apiSlice");
 export const blogApiSlice = BaseApi.injectEndpoints({
   endpoints: builder => ({
     getBlogs: builder.query({
-      query: () => '/api/getblogs'
+      query: () => '/api/getblogs',
+      providesTags:["blogs"],
+      keepUnusedDataFor: 5,
     }),
     getBlog: builder.query({
       query: id => `/api/getblogs/${id}`,
-      noCache: true
+      keepUnusedDataFor:5,
+      providesTags:["blogs"]
     }),
     // createBlog: builder.mutation({
     //   query: data => ({
