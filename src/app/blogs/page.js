@@ -21,7 +21,7 @@ const Blog = () => {
             <h1 className="text-3xl font-bold mb-8">My Blog</h1>
             {isLoading && <Loader />}
             {isError && <p className='text-center'>Somthing error. Refresh the page ...</p>}
-            {!blogs.length && <p className='text-center text-xl'>No blogs found</p>}
+            {/* {!blogs?.length && <p className='text-center text-xl'>No blogs found</p>} */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 mx-auto gap-6">
                 {blogs?.map((blog, index) => (
                     <BlogCard key={index} {...blog} />

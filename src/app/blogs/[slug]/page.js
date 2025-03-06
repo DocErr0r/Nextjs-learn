@@ -9,6 +9,7 @@ import { notFound } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { useGetBlogQuery } from "@/lib/ReduxToolkit/slices/blogApiSlice";
 import Loader from "@/components/Loader/Loader";
+import { format } from "date-fns";
 
 const getBlog = async (slug = '__') => {
     const response = await fetch(`${process.env.BASEURL}/api/getblogs/${slug}`, { cache: 'no-store' })
@@ -18,6 +19,7 @@ const getBlog = async (slug = '__') => {
 
 const BlogInfoPage = ({ params }) => {
     const { error, isLoading, data: blog } = useGetBlogQuery(params.slug);
+
 
     if (isLoading) return <div>
         <Loader />
@@ -29,10 +31,12 @@ const BlogInfoPage = ({ params }) => {
         return notFound();
     }
 
-    if (params.slug !== blog.slug) {
+    if (params.slug !== blog.id) {
         return notFound()
     }
 
+    const ddd = new Date(blog.date._seconds * 1000);
+    const formattedDate = format(ddd, 'MMMM dd, yyyy');
     return (
         <div className="container mx-auto px-4 py-8">
 
@@ -46,7 +50,7 @@ const BlogInfoPage = ({ params }) => {
                         </Avatar>
                         <div>
                             <p className="font-semibold">{blog.author.name}</p>
-                            <p className="text-sm text-gray-400">Published: {blog.date}</p>
+                            <p className="text-sm text-gray-400">Published: {formattedDate}</p>
                         </div>
                     </div>
                 </CardHeader>

@@ -1,6 +1,4 @@
 import { NextResponse } from "next/server";
-import { writeFileSync } from 'fs';
-import path from 'path';
 import { db } from "@/lib/firebase/firebaseAdmin";
 import slugify from "slugify";
 

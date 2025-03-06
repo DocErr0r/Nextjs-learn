@@ -1,6 +1,4 @@
 import { NextResponse } from "next/server";
-import { readdirSync, readFileSync } from 'fs'
-import path from "path";
 import { db } from "@/lib/firebase/firebaseAdmin";
 
 
