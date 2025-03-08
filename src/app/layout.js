@@ -9,7 +9,9 @@ import StoreProvider from "@/components/Proverder";
 
 export const metadata = {
   title: "BlogNits",
-  description: "A blog for developers and blogers",
+  descrption: "A blog for developers and blogers",
+  name: "google-adsense-account",
+  content: "ca-pub-5786637885643901"
 };
 
 export default function RootLayout({ children }) {
